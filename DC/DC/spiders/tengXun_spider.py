@@ -12,7 +12,7 @@ class tc_Spider(scrapy.spiders.Spider):
     def __init__(self):
         self.pattern = re.compile(r'https://new.qq.com/.*')
         self.item = DcItem()
-        self.r = redis.Redis(host='127.0.0.1', port=6379,db=0)
+        self.r = redis.Redis(host='127.0.0.1', port=6379,db=2)
         self.hostUrl = 'https://new.qq.com/'
         self.db = pymysql.connect('localhost','root','3.141592653579','chineseword',charset='utf8' )
 

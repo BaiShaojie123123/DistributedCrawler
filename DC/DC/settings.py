@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 import random
 import sys
-sys.path.append('E:\DataAnalysis\\tools\python3\project\DistributedCrawler\Setting')
+sys.path.append('/Users/baishaojie/python/jdgithub/Setting')
 from UserAgent import *
 # Scrapy settings for DC project
 #
@@ -11,15 +11,30 @@ from UserAgent import *
 #     https://doc.scrapy.org/en/latest/topics/downloader-middleware.html
 #     https://doc.scrapy.org/en/latest/topics/spider-middleware.html
 
+
+
+
+
+
+
 BOT_NAME = 'DC'
 
 SPIDER_MODULES = ['DC.spiders']
 NEWSPIDER_MODULE = 'DC.spiders'
+MYSQL_USER ='tpshopspider'
+MYSQL_HOST ='127.0.0.1'
+MYSQL_PORT ='3306'
+MYSQL_PASSWORD ='DtGKJFKrELs234n4'
+MYSQL_DB_NAME ='tpshopspider'
 
+BASE_PATH = '/Users/baishaojie/dnmp/www/tpshop'
+SOURCE_TYPE_JD='1'
 
 
 ITEM_PIPELINES = {
-    'scrapy_redis.pipelines.RedisPipeline' : 400,
+    # 'scrapy_redis.pipelines.RedisPipeline' : 400,
+    'DC.pipelines.TextInfoPipeline' : 400,
+    'DC.detail.detail' : 401,
 }
 
 DOWNLOADER_MIDDLEWARES = {

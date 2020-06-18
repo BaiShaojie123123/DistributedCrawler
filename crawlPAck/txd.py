@@ -10,7 +10,10 @@ import numpy as np
 import json
 import time
 
-class JingDongDaoJia_2():
+import request
+
+
+class txd():
 
     def __init__(self):
 
@@ -19,53 +22,25 @@ class JingDongDaoJia_2():
         self.wo = self.outwb.active
 
     def start_requests(self):
-        i = 0
-        size = 60
-        TF = True
-        careerSheet = self.getCareerSheet()
-        while TF:  #有数据时标记为true
-            urlList = self.r.lrange("JDDJ_url:items", i*size, (i+1)*60)
-            str_J_ = ''
-            str2 = ''
-            str_AD_ = ''
-            if len(urlList) > 0:  #取到数据不跳出，取不到数据跳出。
-                i = i + 1
-                for item in urlList:
-                    #name = eval(item)['name']
-                    #Class = eval(item)['Class']
-                    skuid = eval(item)['skuid']
-                    str_J_ = str_J_+'J_'+skuid+'%2C'
-                    str2 = str2 + skuid + '%2C'
-                    str_AD_ = str_AD_ + 'AD_' + skuid + '%2C'
-                time.sleep(1)
-                urlPrice = 'https://p.3.cn/prices/mgets?callback=jQuery' + self.getParam() + '&ext=11101000&pin=&type=1&area=1_72_55653_0&skuIds='+str_J_
-                urlChatCount = 'https://club.jd.com/comment/productCommentSummaries.action?my=pinglun&referenceIds='+str2+'&callback=jQuery'+self.getParam()+'&_=1548229360349'
-                url_AD= 'https://ad.3.cn/ads/mgets?&callback=jQuery'+self.getParam()+'&my=list_adWords&source=JDList&skuids='+str_AD_
 
-                listPrice = self.getPrice(urlPrice)
-                listChatCount = self.getChatCount(urlChatCount)
-                list_AD = self.getAD(url_AD)
-
-                for index in range(len(urlList)):
-                    try:
-                        careerSheet.append([
-                                            eval(urlList[index])['skuid'],
-                                            eval(urlList[index])['name'],
-                                            eval(urlList[index])['Class'],
-                                            listPrice[index]['price'],
-                                            listPrice[index]['plus_p'],
-                                            listChatCount[index]['GoodCount'],
-                                            listChatCount[index]['GeneralCount'],
-                                            listChatCount[index]['PoorCount'],
-                                            str(listChatCount[index]['GoodRateShow'])+'%',
-                                            list_AD[index]['ad']
-                        ])
-                    except:
-                        print('数据不足')
-                print('第' + str(i * 60) + '条爬取成功')
-            else:
-                print('超出数据库范围')
-                TF = False
+        data ={"shopIds":"288146005","catId":"txd_10017653","catIds":"[{\"backendCatId\":\"127530071,127530073\",\"catId\":\"txd_10017653\",\"categoryType\":\"3\",\"displayProperties\":\"0\",\"enableNisitc\":\"0\",\"enableOrder\":\"0\",\"extend\":{\"hasInventoryItemCount\":\"26\",\"noInventoryItemCount\":\"0\",\"hasInventoryItemCountStrategy\":\"GICfBE\",\"noInventoryItemCountStrategy\":\"GICfBE\"},\"firstCatId\":\"txd_10017249\",\"isIgraph\":\"0\",\"itemCount\":\"26\",\"noInventoryItemCount\":\"0\",\"parentCatId\":\"txd_10017274\",\"ruleIds\":[],\"ruleWeight\":\"0\",\"tags\":\"\",\"title\":\"家常叶菜\",\"totalItemCount\":\"26\",\"type\":\"0\"}]","pagination":"-1-51-1-0","busiType":"classify","order":"","needProperties":0}
+        params = {
+            'jsv': '2.5.0',
+            'appKey': 12574478,
+            't': int(time.time()*1000),
+            'sign': 'dccded4f1e98f36940da3f6a723fbe46',
+            'v': 1.0,
+            'dataType': 'jsonp',
+            'timeout': 10000,
+            'api': 'mtop.wdk.classify.txdqueryclassifypage',
+            'jsonpIncPrefix': 'weexcb',
+            'ttid': '2020@weex_h5_1.0.36',
+            'type': 'jsonp',
+            'callback': 'mtopjsonpweexcb6',
+            'data': str(data)
+        }
+        response = request.get(url='https://h5api.m.taobao.com/h5/mtop.wdk.classify.txdqueryclassifypage/1.0/',params=params)
+        a  =1
 
     def getParam(self):
         return str(math.floor(10000000*np.random.rand(1)))
@@ -161,7 +136,6 @@ class JingDongDaoJia_2():
     def SaveExcel(self):
         self.outwb.save("/Users/baishaojie/python/jdgithub/JDDJ.xlsx")
 
-if __packege__ == '__main__':
-    jddj = JingDongDaoJia_2()
-    jddj.start_requests()
-    jddj.SaveExcel()
+jddj = txd()
+jddj.start_requests()
+jddj.SaveExcel()

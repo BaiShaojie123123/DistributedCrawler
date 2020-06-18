@@ -17,14 +17,14 @@ from scrapy import signals
 from DC.settings import IPPOOL
 
 import sys
-sys.path.append('E:\DataAnalysis\\tools\python3\project\DistributedCrawler\Setting')
+sys.path.append('/Users/baishaojie/python/jdgithub/Setting')
 from UserAgent import *
 
 
 class Url_SM(object):
 
     def __init__(self):
-        self.file1 = open('E:\DataAnalysis\\tools\python3\project\DistributedCrawler\Setting\ipGood.json', 'r')  # 打开文件
+        self.file1 = open('/Users/baishaojie/python/jdgithub/Setting/ipGood.json', 'r')  # 打开文件
         self.jsonDict = json.load(self.file1)
 
     def process_request(self, request, spider):

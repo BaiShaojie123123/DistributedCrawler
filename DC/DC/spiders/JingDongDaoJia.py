@@ -4,6 +4,7 @@ import re
 import time
 from random import random
 import scrapy
+import oss2
 from scrapy.selector import Selector
 from .. import filterStr
 from .. import settings
@@ -23,11 +24,11 @@ class JDDJ(scrapy.spiders.Spider):
     def __init__(self):
 
         # 搜索词
-        searchKeyWord = '海之蓝'
+        searchKeyWord = '端午大艾叶新鲜艾叶艾草整棵株泡澡月子泡脚泡茶500g'
         # 线上分类id
-        self.catId = '641'
+        self.catId = '628'
         # 想获取多少条数据
-        self.getNum = 10
+        self.getNum = 5
         self.num = 0
         self.supplier_id = 0
 

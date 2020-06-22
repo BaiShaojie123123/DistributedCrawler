@@ -29,3 +29,13 @@ class jdDetail(scrapy.Item):
     weight = scrapy.Field()
     imgArr = scrapy.Field()
     pass
+class jdComment(scrapy.Item):
+    # define the fields for your item here like:
+    source_id = scrapy.Field()
+    goods_id = scrapy.Field()
+    source_type = scrapy.Field()
+    content = scrapy.Field()
+    images = scrapy.Field()
+    # 展示的添加时间
+    add_time = scrapy.Field()
+    pass

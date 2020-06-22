@@ -22,18 +22,15 @@ class TextInfoPipeline(object):
         cc = item['name']
         imgsrc = item['imgsrc']
         imgsrc= imgsrc.replace('jfs/','s546x546_jfs/')
-        skuid = item['skuid']
-        sourceType = item['sourceType']
-        goods_id = item['goods_id']
-
-
         all_path = dirMk.get_all_path(imgsrc)
-
         imgsrc = 'http://'+imgsrc
-
-        goods_img = DB('tp_goods_images_spider')
         search_image_url = calc_md5(imgsrc)
+
+        goods_id = item['goods_id']
+        sourceType = item['sourceType']
+        goods_img = DB('tp_goods_images_spider')
         issetimg = goods_img.field('img_id').where([['goods_id','=',str(goods_id)],['image_url_md5', '=', search_image_url],['source_type','=',sourceType]]).limit('1').findOne()
+
         insertPath = all_path.replace(BASE_PATH, '')
         isGoodsImg = ''
         if not issetimg:

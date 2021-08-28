@@ -20,7 +20,7 @@ from ..items import JingDongDaoJia, jdDetail, jdComment
 import redis
 import pymysql
 
-from ..settings import SOURCE_TYPE_JD, BASE_PATH
+from ..settings import SOURCE_TYPE_JD, BASE_PATH, spider_status_type_comment
 from ..strHelp import calc_md5
 from ..user import UserModel
 import numpy as np
@@ -31,9 +31,9 @@ class JDDJ(scrapy.spiders.Spider):
 
     def __init__(self):
 
-        self.spider_status_type = '2'
+
         self.item = jdComment()
-        self.lastId = DB('spider_status').field('word_value').where([['type', '=', self.spider_status_type],['keyword','=','goods_id']]).limit('1').fieldOne()
+        self.lastId = DB('spider_status').field('word_value').where([['type', '=', spider_status_type_comment],['keyword','=','goods_id']]).limit('1').fieldOne()
         # self.lastId = '0'
         self.maxId = 0
         if self.lastId:
@@ -69,7 +69,7 @@ class JDDJ(scrapy.spiders.Spider):
                         goods_id = goods_item['goods_id']
                         url = Value+str(source_id)+'&page='+str(i + 1)
                         self.lastId = goods_item['goods_id']
-                        DB('spider_status').where([['type','=',self.spider_status_type],['keyword','=','goods_id']]).update({'word_value':str(self.lastId)})
+                        DB('spider_status').where([['type','=',spider_status_type_comment],['keyword','=','goods_id']]).update({'word_value':str(self.lastId)})
                         yield scrapy.Request(url=url, callback=self.parse,meta={'goods_id':goods_id,'source_id':source_id,},dont_filter=True)
 
     def parse(self, response):
@@ -117,6 +117,8 @@ class JDDJ(scrapy.spiders.Spider):
         tp_comment_images_spider = DB('tp_comment_images_spider')
         source_id = data['source_id']
         goods_id = data['goods_id']
+        tp_goods_spider.fin
+
         goods_find_id = tp_goods_spider.field('comment_id').where(
             [['source_id', '=', source_id], ['source_type', '=', 1],['goods_id','=',goods_id]]).order('source_id desc').limit('1').findOne()
         info = {

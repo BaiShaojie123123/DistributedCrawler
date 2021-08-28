@@ -24,9 +24,9 @@ class JDDJ(scrapy.spiders.Spider):
     def __init__(self):
 
         # 搜索词
-        searchKeyWord = '端午大艾叶新鲜艾叶艾草整棵株泡澡月子泡脚泡茶500g'
+        searchKeyWord = '鲁花 食用油 5S压榨一级花生油 5.436L 物理压榨 特香纯正'
         # 线上分类id
-        self.catId = '628'
+        self.catId = '604'
         # 想获取多少条数据
         self.getNum = 5
         self.num = 0

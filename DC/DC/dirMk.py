@@ -6,7 +6,6 @@ import re
 # 获取指定名称的递归目录
 from .settings import BASE_PATH
 
-
 def get_dir_path(pathName):
     # 系统当前时间年份
     year = time.strftime('%Y', time.localtime(time.time()))

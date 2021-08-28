@@ -27,9 +27,11 @@ MYSQL_PORT ='3306'
 MYSQL_PASSWORD ='DtGKJFKrELs234n4'
 MYSQL_DB_NAME ='tpshopspider'
 
-BASE_PATH = '/Users/baishaojie/dnmp/www/tpshop'
+BASE_PATH = '/Users/baishaojie/dnmp-new/www/tpshop'
 SOURCE_TYPE_JD='1'
 
+spider_status_type_image = '1'
+spider_status_type_comment = '2'
 
 ITEM_PIPELINES = {
     # 'scrapy_redis.pipelines.RedisPipeline' : 400,

@@ -17,7 +17,7 @@ from ..items import JingDongDaoJia, jdDetail
 import redis
 import pymysql
 
-from ..settings import SOURCE_TYPE_JD
+from ..settings import SOURCE_TYPE_JD, spider_status_type_image
 from ..user import UserModel
 import numpy as np
 
@@ -27,7 +27,7 @@ class JDDJ(scrapy.spiders.Spider):
 
     def __init__(self):
         self.item = jdDetail()
-        self.lastId = DB('spider_status').field('word_value').where([['type', '=', 1],['keyword','=','goods_id']]).limit('1').fieldOne()
+        self.lastId = DB('spider_status').field('word_value').where([['type', '=', spider_status_type_image],['keyword','=','goods_id']]).limit('1').fieldOne()
         # self.lastId = '0'
         self.maxId = 0
         if self.lastId:
@@ -52,7 +52,7 @@ class JDDJ(scrapy.spiders.Spider):
                 goods_id = goods_item['goods_id']
                 url ='https://item.jd.com/'+str(source_id)+'.html'
                 self.lastId = goods_item['goods_id']
-                DB('spider_status').where([['type','=','1'],['keyword','=','goods_id']]).update({'word_value':str(self.lastId)})
+                DB('spider_status').where([['type','=',spider_status_type_image],['keyword','=','goods_id']]).update({'word_value':str(self.lastId)})
                 yield scrapy.Request(url=url, callback=self.parse,meta={'goods_id':goods_id,'source_id':source_id,},dont_filter=True)
 
     def parse(self, response):
